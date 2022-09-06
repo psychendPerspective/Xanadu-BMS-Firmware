@@ -21,8 +21,7 @@ Firmware for Xanadu BMS : This is the source code for the Xanadu BMS.
 4. Type `git checkout origin/main`  
 5. Now open a Cygwin64 Terminal and change the working directory to the recently cloned repository : <br />
 `cd /cygdrive/c/...../Xanadu-BMS-Firmware/build_all`
-<br />
-Replace the ..... with your working directory path.
+Replace the ..... with your working directory path.<br />
 6. Run the build script : `./rebuild_HV.sh`
 
 ### Upload Firmware BIN file to the BMS
