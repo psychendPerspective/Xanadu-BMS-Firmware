@@ -203,16 +203,16 @@ void modConfigLoadDefaultConfig(modConfigGeneralConfigStructTypedef *configLocat
 
 
 #elif XANADU_HV_EV
-	configLocation->noOfCellsSeries					                                 = 18;					// Total number of cells in series in the battery pack
-	configLocation->noOfCellsParallel                              	                 = 1;                   // Number of cells in parallel
+	configLocation->noOfCellsSeries					                                 = 20;					// Total number of cells in series in the battery pack
+	configLocation->noOfCellsParallel                              	                 = 8;                   // Number of cells in parallel
 	configLocation->noOfParallelModules                       	                     = 1;                   // Number of parallel modules
-	configLocation->batteryCapacity					                                 = 2.50f;				// XXAh battery
+	configLocation->batteryCapacity					                                 = 33.60f;				// XXAh battery
 	configLocation->cellHardUnderVoltage				                             = 2.50f;				// Worst case X.XXV as lowest cell voltage
 	configLocation->cellHardOverVoltage				                                 = 4.20f;				// Worst case X.XXV as highest cell voltage
 	configLocation->cellLCSoftUnderVoltage				                             = 2.70f;				// Lowest cell voltage X.XXV.
-	configLocation->cellSoftOverVoltage				                                 = 4.18f;				// Normal highest cell voltage X.XXV.
+	configLocation->cellSoftOverVoltage				                                 = 4.20f;				// Normal highest cell voltage X.XXV.
 	configLocation->cellBalanceDifferenceThreshold                 	                 = 0.01f;				// Start balancing @ X_V difference, stop if below.
-	configLocation->cellBalanceStart				                                 = 3.6f;				//3.80f	// Start balancing above X.XXV.
+	configLocation->cellBalanceStart				                                 = 3.8f;				//3.80f	// Start balancing above X.XXV.
 	configLocation->cellBalanceAllTime				                                 = false;				// Enable balancing under all opstate
 	configLocation->cellThrottleUpperStart				                             = 0.03f;				// Upper range of cell voltage for charge throttling.
 	configLocation->cellThrottleLowerStart				                             = 0.20f;				// Lower range of cell voltage for discharge throttling.
@@ -244,14 +244,14 @@ void modConfigLoadDefaultConfig(modConfigGeneralConfigStructTypedef *configLocat
 	configLocation->timeoutChargerDisconnected			                             = 1000;					// Wait for X seconds to respond to charger disconnect.
 	configLocation->minimalPrechargePercentage			                             = 0.70f;				// output should be at a minimal of 80% of input voltage.
 	configLocation->timeoutLCPreCharge				                                 = 3.0*1000;				// Precharge error timeout, allow 3 seconds pre-charge time before declaring load error.
-	configLocation->maxAllowedCurrent				                                 = 200.0f;				// Allow max XXXA trough BMS, short circuit current limit
-	configLocation->allowedTempBattDischargingMax                  	                 = 75.0f;                  		// Max battery temperature where discharging is still allowed
+	configLocation->maxAllowedCurrent				                                 = 280.0f;				// Allow max XXXA trough BMS, short circuit current limit
+	configLocation->allowedTempBattDischargingMax                  	                 = 60.0f;                  		// Max battery temperature where discharging is still allowed
 	configLocation->allowedTempBattDischargingMin                  	                 = 0.0f;                    		// Min battery temperature where discharging is still allowed
-	configLocation->allowedTempBattChargingMax                     	                 = 50.0f;                   		// Max battery temperature where charging is still allowed
+	configLocation->allowedTempBattChargingMax                     	                 = 60.0f;                   		// Max battery temperature where charging is still allowed
 	configLocation->allowedTempBattChargingMin                     	                 = 0.0f;                    		// Min battery temperature where charging is still allowed
 	configLocation->allowedTempBattCoolingMax                      	                 = 5.0f;                    		// Max battery temperature where cooling is activated
 	configLocation->allowedTempBattCoolingMin                      	                 = 50.0f;                   		// Min battery temperature where heating is activated
-	configLocation->allowedTempBMSMax                                  	             = 80.0f;                   		// Max BMS operational temperature
+	configLocation->allowedTempBMSMax                                  	             = 75.0f;                   		// Max BMS operational temperature
 	configLocation->allowedTempBMSMin                              	                 = 0.0f;                    		// Min BMS operational temperature
 	configLocation->displayTimeoutBatteryDead			                             = 5000;					// Show battery dead symbol X seconds before going to powerdown in cell voltage error state.
 	configLocation->displayTimeoutBatteryError			                             = 5000;					// Show error symbol for X seconds before going to powerdown in general error state.
@@ -268,11 +268,11 @@ void modConfigLoadDefaultConfig(modConfigGeneralConfigStructTypedef *configLocat
 	configLocation->CANIDStyle                                     	                 = CANIDStyleVESC;          		// CAN ID default Style.
 	configLocation->canBusSpeed                                    	                 = canSpeedBaud500k;        		// 500k CAN baud
 	configLocation->emitStatusOverCAN                              	                 = true;                   		// Send status over can.
-	configLocation->emitStatusProtocol                             	                 = canEmitProtocolCustom; 			// Can emit protocol set to define what can messages will be sent
+	configLocation->emitStatusProtocol                             	                 = canEmitProtocolVESC; 			// Can emit protocol set to define what can messages will be sent
 	configLocation->tempEnableMaskBMS                              	                 = 0x0001;				// Bitwise select what sensor to enable for the BMS (internal sensors).
 	configLocation->tempEnableMaskBattery                          	                 = 0xFFFF;				// Bitwise select what sensor to enable for the battery (external sensors).
   	configLocation->tempEnableMaskExpansion                         	             = 0xFFFF;				// Bitwise select what sensor to enable for the battery (external sensors).
-	configLocation->noOfTempSensorPerModule            		                         = 9;					// Number of temperature sensors monitored per LTC68XX //default 5 for LTC6811_1, default 9 for LTC6813
+	configLocation->noOfTempSensorPerModule            		                         = 5;					// Number of temperature sensors monitored per LTC68XX //default 5 for LTC6811_1, default 9 for LTC6813
 	configLocation->noOfExpansionBoard       			                             = 0;					// Number of expansion board
 	configLocation->noOfTempSensorPerExpansionBoard          	                     = 0;					// Number of temperature sensors monitored per expansion board
 	configLocation->LCUseDischarge                                  	             = enabled;                 	// Enable or disable discharge output
@@ -291,20 +291,20 @@ void modConfigLoadDefaultConfig(modConfigGeneralConfigStructTypedef *configLocat
 	configLocation->NTCBetaFactor[modConfigNTCGroupLTCExt]         	                 = 3435;                   		// NTC Beta factor
 	configLocation->NTCBetaFactor[modConfigNTCGroupMasterPCB]      	                 = 3435;                   		// NTC Beta factor
 	configLocation->NTCBetaFactor[modConfigNTCGroupExp]		                         = 3435;                  		// NTC Beta factor
-	configLocation->cellMonitorType                                	                 = CELL_MON_LTC6813_1;     		// Choose the cell voltage monitor (AFE IC) used
-	configLocation->cellMonitorICCount                             	                 = 1;                      		// Number of LTC681x ICs used
+	configLocation->cellMonitorType                                	                 = CELL_MON_LTC6811_1;     		// Choose the cell voltage monitor (AFE IC) used
+	configLocation->cellMonitorICCount                             	                 = 2;                      		// Number of LTC681x ICs used
 	configLocation->externalEnableOperationalState                 	                 = opStateExtNormal;       		// Go to normal enable mode
 	configLocation->chargeEnableOperationalState                   	                 = opStateChargingModeCharging;		// Go to charging mode when a charger is connected
 	configLocation->powerDownDelay                                 	                 = 3000;                   		// Wait only minimal to turn off
-	configLocation->noOfCellsPerModule                             	                 = 18;                      	// Number of cell levels monitored per LTC68XX	
-	configLocation->lastICNoOfCells					                                 = 0;
+	configLocation->noOfCellsPerModule                             	                 = 12;                      	// Number of cell levels monitored per LTC68XX	
+	configLocation->lastICNoOfCells					                                 = 8;
 	configLocation->lastICMask					                                     = 0;
 	configLocation->humidityICType 					                                 = 0;
 	configLocation->BMSApplication					                                 = electricVehicle;
-	configLocation->cellTypeUsed              										 = AMS_18650_2500mAh;           //type of cell used to determine OCV_vs_SOC lookup table
+	configLocation->cellTypeUsed              										 = MOLICEL_21700_P42A;           //type of cell used to determine OCV_vs_SOC lookup table
 	configLocation->maxSoftUnderVoltageErrorCount                                    = 10;                          //max no of soft undervoltage errors before discharge is disabled
-	configLocation->maxAllowedChargingCurrent                                        = 1.60f;						//overcurrent during charging limit, Charging current is positive
-	configLocation->maxAllowedDischargingCurrent                                     = -7.50f;						//overcurrent during discharging limit, discharging current is negative
+	configLocation->maxAllowedChargingCurrent                                        = 33.70f;						//overcurrent during charging limit, Charging current is positive
+	configLocation->maxAllowedDischargingCurrent                                     = -125.0f;						//overcurrent during discharging limit, discharging current is negative
 
 #endif
 

@@ -18,25 +18,26 @@ Firmware for Xanadu BMS : This is the source code for the Xanadu BMS.
 1. Open a Git terminal in the desired directory by selecting `Git Bash Here` 
 2. Type `git clone https://github.com/psychendPerspective/Xanadu-BMS-Firmware.git`
 3. Change directory to the recently cloned repository 
-4. Type `git checkout origin/main`
-
-5. Now open a Cygwin64 Terminal and change the working directory to the recently cloned repository : `cd /cygdrive/c/...../Xanadu-BMS-Firmware/build_all`<br />
+4. Type `git checkout origin/main`  
+5. Now open a Cygwin64 Terminal and change the working directory to the recently cloned repository : <br />
+`cd /cygdrive/c/...../Xanadu-BMS-Firmware/build_all`
+<br />
 Replace the ..... with your working directory path.
 6. Run the build script : `./rebuild_HV.sh`
 
-## Upload Firmware BIN file to the BMS
-### Flash it using an ST-Link v2 SWD Debugger
+### Upload Firmware BIN file to the BMS
+#### Flash the bin file using an ST-Link v2 SWD Debugger
 
 - Flashing to a new board without a bootloader : 
 1.  Open STM32 ST-Link Utility, select the address as `0x08032000` and then connect to the Xanadu-BMS with the ST-Link.
 2.  Open the bootloader file present in the build_all folder : `generic_bootloader.bin` and flash the bootloader.
 3.  Disconnect, select the address as `0x08000000` and then reconnect to the Xanadu-BMS with the ST-Link.
-4.  Open the recently built firmware bin file in the build_all/ XANADU_HV_EV folder and flash the firmware.
+4.  Open the recently built firmware bin file in the `build_all/ XANADU_HV_EV` folder and flash the firmware.
 
 - Flashing firmware to the board : 
 1.  Open STM32 ST-Link Utility.
 3.  Select the address as `0x08000000` and then connect to the Xanadu-BMS with the ST-Link.
-4.  Open the recently built firmware bin file in the build_all/ XANADU_HV_EV folder and flash the firmware.
+4.  Open the recently built firmware bin file in the `build_all/ XANADU_HV_EV` folder and flash the firmware.
 
 
 # Configuration for Xanadu-BMS
@@ -59,7 +60,7 @@ battery pack : <br />
 11. `cellTypeUsed` : Select the cell Type used in the battery pack to calculate initial SoC
 
 
-### Voltage Limits Configuration
+### Parameter Configuration
 - In `modConfig.c` in the `Modules/Src` folder, under `modConfigLoadDefaultConfig`, configure the following based on the 
 battery pack : <br />
 #### UnderVoltage Limits
@@ -70,22 +71,40 @@ battery pack : <br />
 1. `cellHardOverVoltage`: Absolute maximum voltage(V) for the highest cell voltage
 2. `cellSoftOverVoltage` : Upper Cell voltage limit for the BMS to cut-off during operation
 
-### Current Limits Configuration
-- 
+#### Current Limits Configuration
+- Note : Positive Current is taken as Charging Current while Negative Current is taken as Discharging Current
+1. `maxAllowedCurrent` : Absolute maximum allowed current(A) through the BMS without triggering an error
+2. `maxAllowedChargingCurrent` : Current Limit for the BMS to cut-off during Charging. Set this limit based on the maximum recommended charging current for the cells used in the battery pack.
+3. `maxAllowedDischargingCurrent` : Current Limit for the BMS to cut-off during Discharging . Set this limit based on the load rating/ maximum recommended discharging current for the cells used in the battery pack. This value should have a negative sign.
 
-### Temperature Limits Configuration
-- 
+#### Temperature Limits Configuration
+1. `allowedTempBattDischargingMax` : Maximum Battery Pack Temperature(degC) allowed during Discharging
+2. `allowedTempBattDischargingMin` : Minimum Battery Pack Temperature (degC)allowed during Discharging
+3. `allowedTempBattChargingMax` : Maximum Battery Pack Temperature(degC) allowed during Charging
+4. `allowedTempBattChargingMin` : Minimum Battery Pack Temperature(degC) allowed during Charging
+5. `allowedTempBMSMax` : Absolute Maximum temperature(degC) allowed for normal BMS operation
+6. `allowedTempBMSMin` : Absolute Minimum temperature(degC) allowed for normal BMS operation
 
-### Passive Balancing Configuration
+#### Passive Cell Balancing Configuration
+1. `cellBalanceStart` : Start balancing above this cell voltage(V) during charging
+2. `cellBalanceDifferenceThreshold` : If the Cell Imbalance Voltage, i.e (Cell Voltage - Lowest Cell Voltage) is above this voltage limit, cell balancing will occur 
+3. `cellBalanceAllTime` : Enable cell balancing under all operational states
 
+#### Logging Interval 
+- In `modSDcard.h` in the `Modules/Inc` folder,configure the following : <br />
+1. `LOGGING_INTERVAL` : Set the SD card logging interval in milliseconds.
 
+# Project Directory Layout
+- `Main` folder contains the main application code
+- `Modules` folder contains the source and header files for the application layer
+- `Libraries` folder contains the source and header files for the external libraries used
+- `Drivers` folder contains drivers for the hardware and software peripherals, as well as the STM32 HAL drivers
+- `GCC` folder contains the startup code and linker script required for the controller
+- `build_all` folder contains the build scripts and firmware build files
 
-# Project Directory
-
-
-### Flash Memory Management
-When flashing the application the start address should be: 0x08000000
-When flashing the bootloader the start address should be: 0x08032000
+#### Flash Memory Management
+When flashing the application the start address should be: `0x08000000`
+When flashing the bootloader the start address should be: `0x08032000`
 
 The flash is formatted as follows (summary):
 
