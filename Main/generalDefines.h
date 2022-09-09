@@ -49,10 +49,10 @@
 	#define HAS_CHARGER_VOLTAGE_MEASUREMENT			        0
 	#define HAS_COMMON_CHARGE_DISCHARGE_OPTION		        0
 	#define HAS_EXTERNAL_VOLTAGE_MEASUREMENT				0      //has isolated Op-amp(AMC3302/ISL)
-	#define BMS_16S_CONFIG                                  0
+	#define BMS_16S_CONFIG                                  1
 	#define BMS_BOARD_NTC									0      //has tempertaure sensors(NTC) on the BMS board
 	#define HAS_COOLING                                     1
-	#define BMS_20S_CONFIG                                  1
+	#define BMS_20S_CONFIG                                  0
 #endif
 
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))

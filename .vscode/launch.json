@@ -4,14 +4,14 @@
     "configurations": [       
         {
             "cwd": "${workspaceFolder}",
-            "executable": "C:\\Users\\visha\\OneDrive\\Documents\\code\\BMS-Firmware\\build_all\\XANADU_HV_EV\\XANADU_HV_EV-BMS.elf",
+            "executable": "C:\\Users\\visha\\OneDrive\\Documents\\code\\Xanadu-BMS-Firmware\\build_all\\XANADU_HV_EV\\XANADU_HV_EV-BMS.elf",
             "name": " STLink Debugging ",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
             "armToolchainPath": "C:\\Program Files (x86)\\Arm GNU Toolchain arm-none-eabi\\11.2 2022.02\\bin",
             "interface": "swd",
-            "svdFile": "C:\\Users\\visha\\OneDrive\\Documents\\code\\BMS-Firmware\\STM32F303.svd",
+            "svdFile": "C:\\Users\\visha\\OneDrive\\Documents\\code\\Xanadu-BMS-Firmware\\STM32F303.svd",
             "runToMain": true,
             "configFiles": [
                 "interface\\stlink.cfg",
@@ -19,7 +19,7 @@
             ],
             "debuggerArgs": [
                 "-d",
-                "C:\\Users\\visha\\OneDrive\\Documents\\code\\BMS-Firmware\\"
+                "C:\\Users\\visha\\OneDrive\\Documents\\code\\Xanadu-BMS-Firmware\\"
               ],
             "preRestartCommands": [
                 "load",

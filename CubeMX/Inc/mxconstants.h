@@ -41,14 +41,14 @@
 
 /* Private define ------------------------------------------------------------*/
 
-#define SAFETY_ENA_Pin GPIO_PIN_13
-#define SAFETY_ENA_GPIO_Port GPIOC
-#define ChargeDetect_Pin GPIO_PIN_14
-#define ChargeDetect_GPIO_Port GPIOC
-#define Wireless_GD0_Pin GPIO_PIN_15
-#define Wireless_GD0_GPIO_Port GPIOC
-#define NTC_SWITCH_Pin GPIO_PIN_0
-#define NTC_SWITCH_GPIO_Port GPIOA
+// #define SAFETY_ENA_Pin GPIO_PIN_13
+// #define SAFETY_ENA_GPIO_Port GPIOC
+// #define ChargeDetect_Pin GPIO_PIN_14
+// #define ChargeDetect_GPIO_Port GPIOC
+// #define Wireless_GD0_Pin GPIO_PIN_15
+// #define Wireless_GD0_GPIO_Port GPIOC
+// #define NTC_SWITCH_Pin GPIO_PIN_0
+// #define NTC_SWITCH_GPIO_Port GPIOA
 #define VoutSense_Pin GPIO_PIN_1
 #define VoutSense_GPIO_Port GPIOA
 #define BOOTLOADER_TX_Pin GPIO_PIN_2

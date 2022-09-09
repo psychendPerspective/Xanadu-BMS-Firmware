@@ -35,6 +35,7 @@ SRCS += ./Drivers/HWDrivers/Src/driverHWSwitches.c
 SRCS += ./Drivers/HWDrivers/Src/driverHWStatus.c
 SRCS += ./Drivers/HWDrivers/Src/driverHWUART2.c
 SRCS += ./Drivers/HWDrivers/Src/driverHWSPI2.c
+SRCS += ./Drivers/HWDrivers/Src/driverHWRTC.c
 
 SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.c
 SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc.c
@@ -53,6 +54,10 @@ SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.c
 SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi.c
 SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c
 SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c
+SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rtc.c
+SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rtc_ex.c
+SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c
+SRCS += ./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr_ex.c
 
 SRCS += ./Device/stm32f3xx_it.c
 SRCS += ./Device/stm32f3xx_hal_msp.c

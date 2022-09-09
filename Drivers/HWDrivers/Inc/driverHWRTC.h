@@ -19,28 +19,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __MODSDCARD_H
-#define __MODSDCARD_H
 
-#include "fatfs.h"
-#include "driverHWSPI2.h"
-#include "ff.h"
-#include "fatfs_sd.h"
-#include "modPowerElectronics.h"
-#include "modConfig.h"
-#include "driverHWRTC.h"
-
-/*Relevant FATFS library files compatible with stm32f30x HAL library : https://github.com/STMicroelectronics/stm32_mw_fatfs/releases/tag/r0.11 */
-
-#define MIN_SDCARD_STORAGE_REQ           1024           //MiB
-#define LOGGING_INTERVAL                 2000           //ms
+#include "stm32f3xx_hal.h"
+#include "stm32f3xx_hal_rtc.h"
+#include "stm32f3xx_hal_rtc_ex.h"
 
 
-uint8_t modSDcard_Init(modPowerElectronicsPackStateTypedef *packState, modConfigGeneralConfigStructTypedef *generalConfigPointer);
-int bufsize (char *buf);
-void clear_buffer (void);
-void RTCgetCurrentTime(void);
-void modSDcard_logtoCSV(void);
-
-
-#endif
+void driverHWRTCInit(void);
+void driverHWRTCSetTime(void);
+void driverHWRTCGetCurrentTime(void);

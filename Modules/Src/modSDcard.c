@@ -24,14 +24,25 @@ uint32_t modSDcardLogIntervalTick;
 #define BUFFER_SIZE 512
 char stringBuffer[BUFFER_SIZE];
 
+//RTC variables
+extern RTC_HandleTypeDef driverHWRTCHandle;
+RTC_DateTypeDef gDate;
+RTC_TimeTypeDef gTime;
+
 uint8_t modSDcard_Init(modPowerElectronicsPackStateTypedef *packState, modConfigGeneralConfigStructTypedef *generalConfigPointer)
 {
     modSDcardPackStateHandle = packState;
     modSDcardGeneralConfigHandle = generalConfigPointer;
     sdCardStatus = false;
-    //init SPI2, FATFS driver and parameter config
+    //init SPI2, FATFS, RTC driver and parameter config
     driverHWSPI2Init();
     MX_FATFS_Init();
+    driverHWRTCInit();
+
+    if(HAL_RTCEx_BKUPRead(&driverHWRTCHandle,RTC_BKP_DR1) != 0x32F2)
+  	{
+	    driverHWRTCSetTime(); //set RTC init value
+  	}
 
     //mount SD card, check SD card mounting status and available space
 	fresult = f_mount(&fs, "/", 1);
@@ -99,10 +110,20 @@ void clear_buffer (void)
 	for (int i=0; i<BUFFER_SIZE; i++) stringBuffer[i] = '\0';
 };
 
+
+void RTCgetCurrentTime(void)
+{
+    /* Get the RTC current Time */
+    HAL_RTC_GetTime(&driverHWRTCHandle, &gTime, RTC_FORMAT_BIN);
+    /* Get the RTC current Date */
+    HAL_RTC_GetDate(&driverHWRTCHandle, &gDate, RTC_FORMAT_BIN);
+}
+
 void modSDcard_logtoCSV(void)
 {
     if(modDelayTick1ms(&modSDcardLogIntervalTick, LOGGING_INTERVAL))
     {
+        RTCgetCurrentTime();
         #if BMS_16S_CONFIG
         fresult = f_open(&bms_log_file, "XanaduBMS_Log_File.csv", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
         if(fresult != FR_OK)
@@ -110,8 +131,8 @@ void modSDcard_logtoCSV(void)
         fresult = f_lseek(&bms_log_file, f_size(&bms_log_file));
         if(fresult != FR_OK)
             return;
-        snprintf(stringBuffer,BUFFER_SIZE, "%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f \r\n",
-                (HAL_GetTick()/1000.0), 
+        snprintf(stringBuffer,BUFFER_SIZE, "%02d-%02d-%2d   %02d:%02d:%02d,%.3f,%.3f,%.3f,%.3f,%.3f,%d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f \r\n",
+                gDate.Date, gDate.Month, 2000 + gDate.Year,gTime.Hours, gTime.Minutes, gTime.Seconds, 
                 modSDcardPackStateHandle->packVoltage,
                 modSDcardPackStateHandle->packCurrent,
                 modSDcardPackStateHandle->packPower,
