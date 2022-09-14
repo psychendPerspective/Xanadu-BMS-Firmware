@@ -101,17 +101,72 @@ battery pack : <br />
 - `GCC` folder contains the startup code and linker script required for the controller
 - `build_all` folder contains the build scripts and firmware build files
 
+#### Operational and Fault States
+
+- The integer values present in the SD card logging file correspond to the following operational and fault state enums respectively, present in `Main/mainDataTypes.h`
+
+```
+//Operational States
+typedef enum {
+	OP_STATE_INIT = 0,		     // 0
+	OP_STATE_CHARGING,		     // 1
+	OP_STATE_PRE_CHARGE,		 // 2
+	OP_STATE_LOAD_ENABLED,		 // 3
+	OP_STATE_BATTERY_DEAD,		 // 4
+	OP_STATE_POWER_DOWN,		 // 5
+	OP_STATE_EXTERNAL,		     // 6
+	OP_STATE_ERROR,			     // 7
+	OP_STATE_ERROR_PRECHARGE,	 // 8
+	OP_STATE_BALANCING,		     // 9
+	OP_STATE_CHARGED,		     // 10
+	OP_STATE_FORCEON,	 	     // 11
+} OperationalStateTypedef;
+
+//Fault States
+typedef enum {
+	FAULT_CODE_NONE = 0,                    //0
+	FAULT_CODE_PACK_OVER_VOLTAGE,           //1
+	FAULT_CODE_PACK_UNDER_VOLTAGE,          //2
+	FAULT_CODE_LOAD_OVER_VOLTAGE,           //3
+	FAULT_CODE_LOAD_UNDER_VOLTAGE,          //4
+	FAULT_CODE_CHARGER_OVER_VOLTAGE,        //5
+	FAULT_CODE_CHARGER_UNDER_VOLTAGE,       //6
+	FAULT_CODE_CELL_HARD_OVER_VOLTAGE,      //7
+	FAULT_CODE_CELL_HARD_UNDER_VOLTAGE,     //8
+	FAULT_CODE_CELL_SOFT_OVER_VOLTAGE,      //9
+	FAULT_CODE_CELL_SOFT_UNDER_VOLTAGE,     //10
+	FAULT_CODE_MAX_UVP_OVP_ERRORS,          //11
+	FAULT_CODE_MAX_UVT_OVT_ERRORS,          //12
+	FAULT_CODE_OVER_CURRENT,                //13
+	FAULT_CODE_OVER_TEMP_BMS,               //14
+	FAULT_CODE_UNDER_TEMP_BMS,              //15
+	FAULT_CODE_DISCHARGE_OVER_TEMP_CELLS,   //16
+	FAULT_CODE_DISCHARGE_UNDER_TEMP_CELLS,  //17
+	FAULT_CODE_CHARGE_OVER_TEMP_CELLS,      //18
+	FAULT_CODE_CHARGE_UNDER_TEMP_CELLS,     //19
+	FAULT_CODE_PRECHARGE_TIMEOUT,           //20
+	FAULT_CODE_DISCHARGE_RETRY,             //21
+	FAULT_CODE_CHARGE_RETRY,                //22
+	FAULT_CODE_CAN_DELAYED_POWER_DOWN,      //23
+	FAULT_CODE_NOT_USED_TIMEOUT,            //24
+	FAULT_CODE_CHARGER_DISCONNECT,          //25
+	FAULT_CODE_MAX_SOFT_UVP_ERRORS          //26
+} bms_fault_state;
+
+
+```
+
 #### Flash Memory Management
 When flashing the application the start address should be: `0x08000000`
 When flashing the bootloader the start address should be: `0x08032000`
 
 The flash is formatted as follows (summary):
 
-- ((uint32_t)0x08000000) :  Base @ of Page 0, 2 Kbytes  // Startup Code - Main application
-- ((uint32_t)0x08000800) :  Base @ of Page 1, 2 Kbytes  // Page0 - EEPROM emulation
+- ((uint32_t)0x08000000) :  Base @ of Page 0, 2 Kbytes   // Startup Code - Main application
+- ((uint32_t)0x08000800) :  Base @ of Page 1, 2 Kbytes   // Page0 - EEPROM emulation
 - ((uint32_t)0x08001000) :  Base @ of Page 2, 2 Kbytes   // Page1 - EEPROM emulation
 - ((uint32_t)0x08001800) :  Base @ of Page 3, 2 Kbytes   // Remainder of the main application firmware stars from here.
 - ((uint32_t)0x08019000) :  Base @ of Page 50, 2 Kbytes  // New app firmware base addres
 - ((uint32_t)0x08032000) :  Base @ of Page 100, 2 Kbytes // Bootloader base
 
-See "modFlash.h" and "modFlash.c" for more info.
+See `modFlash.h` and `modFlash.c` for more info.
