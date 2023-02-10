@@ -1,5 +1,5 @@
 # Xanadu-BMS-Firmware
-Firmware for Xanadu BMS : This is the source code for the Xanadu BMS.
+Firmware for Xanadu BMS : This is the source code for the Xanadu BMS, based on the Ennoid-BMS
 
 # Setup Prerequisites
 
